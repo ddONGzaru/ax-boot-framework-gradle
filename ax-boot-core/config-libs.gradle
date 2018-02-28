@@ -1,0 +1,63 @@
+/*
+	compile('org.springframework.boot:spring-boot-starter')
+	compile project(':project-submodule')
+	compile files('../libs/javax.jms.jar')
+	compile fileTree(dir: 'libs', include: '*.jar')
+*/
+
+dependencies {
+
+    /*
+    ------------------------------
+        compile
+    ------------------------------
+    */
+
+    // spring-boot
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-security'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // inject
+    compile 'javax.inject:javax.inject:1'
+
+    // mybatis
+    compile 'org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.1'
+
+    // jpa & jdbc :: querydsl, postgres
+    compile 'com.querydsl:querydsl-jpa:4.1.4'
+    compile 'com.querydsl:querydsl-apt:4.1.4'
+    compile 'org.apache.commons:commons-dbcp2:2.2.0'
+
+    // swagger2
+    compile 'io.springfox:springfox-swagger2:2.8.0'
+    compile 'io.springfox:springfox-swagger-ui:2.8.0'
+
+    // apache commons
+    compile 'commons-dbutils:commons-dbutils:1.7'
+
+    // user-agent-utils
+    compile 'eu.bitwalker:UserAgentUtils:1.21'
+
+    // jxls
+    compile 'org.jxls:jxls:2.4.3'
+
+
+    // geronimo-utils
+    compile 'io.geronimo:geronimo-utils:1.10.0.RELEASE'
+
+    /*
+    ------------------------------
+        testCompile
+    ------------------------------
+    */
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+
+    /*
+    ------------------------------
+        runtime
+    ------------------------------
+    */
+    runtime 'org.springframework.boot:spring-boot-devtools'
+
+}

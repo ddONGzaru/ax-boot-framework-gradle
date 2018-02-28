@@ -1,0 +1,73 @@
+/*
+ ##################################################
+ #
+ # [ plantpulse-web-console ] querydsl config
+ #
+ ##################################################
+ */
+
+/*
+  ------------------------------
+	 queydsl - configuration
+  ------------------------------
+*/
+configurations {
+    querydslapt
+}
+
+/*
+  ------------------------------
+	 queydsl - source-sets
+  ------------------------------
+*/
+sourceSets {
+    querydsl.java.srcDirs = ['src/main/querydsl']
+}
+
+/*
+  ------------------------------
+	 queydsl - generate-querydsl
+  ------------------------------
+*/
+task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {
+    source = sourceSets.main.java
+    classpath = configurations.compile + configurations.querydslapt
+
+    options.compilerArgs = [
+            '-proc:only',
+            '-processor', 'com.querydsl.apt.jpa.JPAAnnotationProcessor'
+    ]
+    destinationDir = sourceSets.querydsl.java.srcDirs.iterator().next()
+
+    //dependencyCacheDir = compileJava.dependencyCacheDir
+}
+
+/*
+  ------------------------------
+	 queydsl - idea config
+  ------------------------------
+*/
+idea {
+    module {
+        sourceDirs += file('src/main/querydsl')
+    }
+}
+
+/*
+  ------------------------------
+	 queydsl - compile
+  ------------------------------
+*/
+compileJava {
+    dependsOn generateQueryDSL
+    source generateQueryDSL.destinationDir
+}
+
+/*
+  ------------------------------
+	 queydsl - clean
+  ------------------------------
+*/
+clean {
+    delete sourceSets.querydsl.java.srcDirs
+}

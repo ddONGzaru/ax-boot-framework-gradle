@@ -1,0 +1,105 @@
+# ===================================================================
+#
+# HERA WebApp properties
+#
+# ===================================================================
+
+# ----------------------------------------
+# config - default
+# ----------------------------------------
+
+## [ server ]
+server:
+  port: ${PORT:8000}
+
+## [ spring ]
+spring:
+
+  ## active profiles :: [local|dev|test|stage|prod]
+  profiles:
+    active: ${PROFILE:local}
+    include: base, props, menu
+
+  ## datasource
+  datasource:
+    url: jdbc:log4jdbc:postgresql://${server.host}:5432/hera
+    username: admin
+    password: admin
+
+
+# ----------------------------------------
+# profile :: local
+# ----------------------------------------
+---
+## [ spring ]
+spring:
+  profiles: local
+
+  ## devtools
+  devtools.livereload.enabled: true
+
+
+# ----------------------------------------
+# profile :: dev
+# ----------------------------------------
+---
+## [ spring ]
+spring:
+  profiles: dev
+
+
+# ----------------------------------------
+# profile :: test
+# ----------------------------------------
+---
+## [ spring ]
+spring:
+  profiles: test
+
+
+# ----------------------------------------
+# profile :: prod
+# ----------------------------------------
+---
+## [ spring ]
+spring:
+  profiles: prod
+
+  ## datasource
+  datasource:
+    url: jdbc:log4jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:hera}
+    username: ${DB_ID:admin}
+    password: ${DB_PWD:admin}
+
+  ## mongodb
+  data.mongodb:
+    host: ${MONGO_HOST:localhost}
+    port: ${MONGO_PORT:27017}
+    database: ${MONGO_DB_NAME:hera}
+
+  ## cloud-stream
+  cloud.stream:
+    kafka.binder:
+      brokers: ${KAFKA_HOST:localhost}:19092,${KAFKA_HOST:localhost}:29092,${KAFKA_HOST:localhost}:39092
+      zkNodes: ${ZK_HOST:localhost}:22181,${ZK_HOST:localhost}:32181,${ZK_HOST:localhost}:42181
+    bindings.input:
+      destination: ${QUEUE:tag-raw}
+
+  ## rabbitmq
+  rabbitmq:
+    addresses: ${RABBIT_HOST:localhost}:5672,${RABBIT_HOST:localhost}:5682,${RABBIT_HOST:localhost}:5692
+    username: ${RABBIT_ID:admin}
+    password: ${RABBIT_PWD:admin}
+    raw-tag:
+      exchange: ${RABBIT_RAW_TAG_EXCHANGE:tag.raw}
+      queue: ${RABBIT_RAW_TAG_QUEUE:tag.raw}
+      binding: ${RABBIT_RAW_TAG_BINDING:routing.key.tag.raw}
+
+## [ logging ]
+logging.config: /home/docker/app/logback.xml
+
+## [ server ]
+server:
+  ## server port
+  port: ${PORT:80}
+  session.timeout: 600 #단위 - 분
