@@ -1,0 +1,4 @@
+rootProject.name = 'ax-boot-framework-gradle'
+include 'ax-boot-core',
+        'ax-boot-admin',
+        'ax-boot-initialzr'
